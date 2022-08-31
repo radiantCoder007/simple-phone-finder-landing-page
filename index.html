@@ -33,17 +33,20 @@
     </header>
 
     <!-- Search field -->
-    <section class="search-field-section d-flex align-items-center justify-content-center m-5"
-        id="search-field-section">
+    <section class="search-field-section text-center  m-5" id="search-field-section">
 
         <div class="col-auto">
             <input type="text" class="search-field" id="search-field" placeholder="Enter phone name">
             <button class="btn btn-primary mb-3" id="search-btn" onclick="searchPhone()">Search!</button>
         </div>
+
+        <div id="no-results-found" class="d-none">
+            <h3>Sorry, no match found, please try again!</h3>
+        </div>
     </section>
 
     <!-- Spinner section -->
-    <section class="spinner" id="spinner">
+    <section class="spinner d-none" id="spinner-section">
         <div class="spinner-border text-danger d-flex mx-auto mb-4 p-3" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>

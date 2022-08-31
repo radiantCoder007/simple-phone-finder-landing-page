@@ -7,6 +7,7 @@ document.getElementById("search-field")
         }
     });
 
+const spinenrSection = document.getElementById('spinner-section');
 
 const getPhoneData = (phone) => {
 
@@ -19,33 +20,51 @@ const getPhoneData = (phone) => {
 const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
-    getPhoneData(searchText);
-    searchField.value = '';
+    if (searchText.length === 0) {
+        alert('Enter a search term');
+    }
+    else {
+        spinenrSection.classList.remove('d-none')
+        getPhoneData(searchText);
+        searchField.value = '';
+    }
 }
 
 const displayPhone = phone => {
     const phoneDisplay = document.getElementById('phone-display-area');
     phoneDisplay.innerHTML = '';
+    // hiding spinner
+    spinenrSection.classList.add('d-none')
+    // finding out how many results appear
+    const numberofPhones = Object.keys(phone).length;
+    console.log(numberofPhones);
 
-    phone.forEach(phone => {
+    if (numberofPhones != 0) {
+        document.getElementById('no-results-found').classList.add('d-none');
+        phone.forEach(phone => {
 
-        const phoneDiv = document.createElement('div');
-        phoneDiv.classList.add('col');
-        phoneDiv.innerHTML = `
-                <div class="card">
-                    <img src="${phone.image}" class="card-img-top p-2">
-                    <div class="card-body">
-                        <h5 class="card-title">${phone.phone_name}</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-
-                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneDetailsModal" onclick="viewPhoneDetails('${phone.slug}')">View Details</button>
-                                
+            const phoneDiv = document.createElement('div');
+            phoneDiv.classList.add('col');
+            phoneDiv.innerHTML = `
+                    <div class="card">
+                        <img src="${phone.image}" class="card-img-top p-2">
+                        <div class="card-body">
+                            <h5 class="card-title">${phone.phone_name}</h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                                additional content. This content is a little bit longer.</p>
+    
+                           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneDetailsModal" onclick="viewPhoneDetails('${phone.slug}')">View Details</button>
+                                    
+                        </div>
                     </div>
-                </div>
-                `
-        phoneDisplay.appendChild(phoneDiv);
-    });
+                    `
+            phoneDisplay.appendChild(phoneDiv);
+        });
+    }
+    else {
+        document.getElementById('no-results-found').classList.remove('d-none');
+    }
+
 }
 
 // View phone Details
